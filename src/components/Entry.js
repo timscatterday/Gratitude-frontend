@@ -7,7 +7,9 @@ export default ({data}) => (
         <Card.Content header={data.text} />
         <Card.Content description={data.updated_at} />
         <Card.Content extra>
-            <Button >View</Button> 
+           <Link to={`/${data.id}`}>
+                <Button >View</Button> 
+           </Link>
         </Card.Content>
     </Card>
 );
