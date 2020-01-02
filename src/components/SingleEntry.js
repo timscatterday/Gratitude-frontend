@@ -1,6 +1,7 @@
 import React from 'react';
 import {Label, Button, Dimmer, Loader, Modal} from 'semantic-ui-react';
 import {API_URL} from '../utils/constants';
+import EntryForm from './EntryForm';
 import {getUserId} from '../utils/user'
 import axios from 'axios';
 
@@ -116,7 +117,11 @@ class SingleEntry extends React.Component {
                         open={true}
                     >
                         <Modal.Content>
-                            <h3>This website uses cookies to ensure the best user experience.</h3>
+                            <EntryForm 
+                                mode="update" 
+                                entry={entry} 
+                                done={this.handleModalClose}
+                            />
                         </Modal.Content>
                     </Modal>
                 }

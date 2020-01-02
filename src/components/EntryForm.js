@@ -18,6 +18,16 @@ class EntryForm extends React.Component{
         this.handleChange = this.handleChange.bind(this);
     };
 
+    componentDidMount(){
+        const {entry} = this.props;
+
+        console.log("EntryForm.componentDidMethod entry", entry)
+
+        if(entry){
+            this.setState({text: entry.text})
+        };
+    }
+
     async handleSubmit(e){
         e.preventDefault();
 
@@ -29,8 +39,14 @@ class EntryForm extends React.Component{
 
         console.log("add entry.handleSubmit before axios", this)
         
+        // defaulted method and url to create
         let method = 'POST'
         let url = `${API_URL}/entries`
+        
+        if(this.props.mode === 'update' && this.props.entry && this.props.entry.id){
+            method = 'PUT'
+            url = `${API_URL}/entries/${this.props.entry.id}`
+        }
 
         const add_entry_res = await axios({
             method,
@@ -41,6 +57,11 @@ class EntryForm extends React.Component{
         console.log("add entry.handleSubmit after axios")
 
         this.setState({loading: false, text: ""})
+
+        const {done} = this.props;
+        if(done){
+            done(true)
+        }
     }
 
     handleChange(e){
@@ -48,7 +69,8 @@ class EntryForm extends React.Component{
     }
 
     render(){
-        const {loading} = this.state;
+        const {loading, text} = this.state;
+        console.log("EntryForm.render this.state", this.state)
         return(
             <div className="EntryForm">
                 <Form onSubmit={this.handleSubmit.bind(this)} loading={loading}>
@@ -56,7 +78,8 @@ class EntryForm extends React.Component{
                     <Form.Input 
                         fluid label='Text' 
                         placeholder='Text' 
-                        name='text' 
+                        name='text'
+                        value={text} 
                         onChange={this.handleChange}
                     />
                     <Form.Input 
