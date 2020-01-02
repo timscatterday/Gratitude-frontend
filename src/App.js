@@ -15,8 +15,8 @@ function App() {
           <Switch>
             <Route path='/' exact component={Entries} />
             <Route path='/:id' exact component={SingleEntry} />
+            <Route path='/new' exact component={AddEntry} />
           </Switch>
-          <AddEntry />
         </BrowserRouter>
       </Container>
     </div>
